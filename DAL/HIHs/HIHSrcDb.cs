@@ -1,0 +1,53 @@
+﻿using SK2EVERYONE.BLL.HIHs;
+using SK2EVERYONE.Model.HIHs;
+using System;
+using System.Collections.Generic;
+using System.Data.SqlClient;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace SK2EVERYONE.DAL.HIHs
+{
+    public class HIHSrcDb
+    {
+        public string connectionStringSourceSql;
+        public HIHSrcDb() 
+        {
+            connectionStringSourceSql = AppConfig.GetConnectionStringSourceSql();
+        }
+
+        public List<HIH> GetAllHIH()
+        {
+            List<HIH> hihList = new List<HIH>();
+            try
+            {
+                using (SqlConnection con = new SqlConnection(connectionStringSourceSql))
+                {
+                    SqlCommand cmd = new SqlCommand();
+                    cmd.Connection = con;
+                    cmd.CommandType = System.Data.CommandType.Text;
+                    cmd.CommandText = "SELECT T.KOC0441, T.NAC044101, T.NAC044102, T3.KOC0440 FROM A00C0441 T LEFT JOIN A00C0440 T3 ON(T3.ICI0000 = T.ODI0440)";
+                    con.Open();
+                    SqlDataReader rdr = cmd.ExecuteReader();
+                    while (rdr.Read())
+                    {
+                        hihList.Add(new HIH
+                        {
+                            Id = rdr[0].ToString(),
+                            Name = rdr[1].ToString(),
+                            Region = rdr[2].ToString(),
+                            IdWithoutRegion = rdr[3].ToString()
+                        });
+                    }
+                }
+
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            return hihList;
+        }
+    }
+}

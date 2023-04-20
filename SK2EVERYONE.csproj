@@ -91,7 +91,13 @@
     <None Update="replication.conf">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
+    <None Update="runapp.bat">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Update="security4.fdb">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="sk2everyone.empty">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Update="SK2EVERYONE.FDB">
@@ -103,6 +109,10 @@
     <None Update="zlib1.dll">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="logs\" />
   </ItemGroup>
 
 </Project>

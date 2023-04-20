@@ -1,10 +1,5 @@
 ﻿using SK2EVERYONE.DAL.HIHs;
 using SK2EVERYONE.Model.HIHs;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace SK2EVERYONE.BLL.HIHs
 {
@@ -12,7 +7,18 @@ namespace SK2EVERYONE.BLL.HIHs
     {
         public List<HIH> GetAllHIH()
         {
-            return new HIHSrcDb().GetAllHIH();
+            var checkHIHList =  new HIHSrcDb().GetAllHIH();
+
+            foreach (HIH h in checkHIHList)
+            {
+                if (h.Id == null)
+                {
+                   checkHIHList.Remove(h);
+                }
+            }
+
+
+            return checkHIHList;
         }
     }
 }

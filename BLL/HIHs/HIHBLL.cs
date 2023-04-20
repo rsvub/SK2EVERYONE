@@ -7,13 +7,20 @@ namespace SK2EVERYONE.BLL.HIHs
     {
         public List<HIH> GetAllHIH()
         {
-            var checkHIHList =  new HIHSrcDb().GetAllHIH();
+            List<HIH> hihList =  new HIHSrcDb().GetAllHIH();
+            List<HIH> checkHIHList = new List<HIH>();
 
-            foreach (HIH h in checkHIHList)
+            foreach (HIH h in hihList)
             {
-                if (h.Id == null)
+                if (h.Id != "")
                 {
-                   checkHIHList.Remove(h);
+                    checkHIHList.Add(new HIH
+                    {
+                        Id = h.Id,
+                        Name = h.Name,
+                        Region = h.Region,
+                        IdWithoutRegion = h.IdWithoutRegion,
+                    });
                 }
             }
 

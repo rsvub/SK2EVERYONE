@@ -1,0 +1,8 @@
+{
+  "profiles": {
+    "SK2EVERYONE": {
+      "commandName": "Project",
+      "commandLineArgs": "log import appsetings.json"
+    }
+  }
+}

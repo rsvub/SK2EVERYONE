@@ -15,11 +15,13 @@ namespace SK2EVERYONE
             GetAppSttingsFile();
         }
 
+        static string appSetings = Environment.GetCommandLineArgs()[3];
+
         public static void GetAppSttingsFile()
         {
             var builder = new ConfigurationBuilder()
                 .SetBasePath(Directory.GetCurrentDirectory())
-                .AddJsonFile("appsetings.json", optional: false, reloadOnChange: true);
+                .AddJsonFile(appSetings, optional: false, reloadOnChange: true);
             _iconfiguration = builder.Build();
         }
         public static string GetConnectionStringSourceSql()

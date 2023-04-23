@@ -1,11 +1,5 @@
-﻿using SK2EVERYONE.BLL.HIHs;
-using SK2EVERYONE.Model.HIHs;
-using System;
-using System.Collections.Generic;
+﻿using SK2EVERYONE.Model.HIHs;
 using System.Data.SqlClient;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace SK2EVERYONE.DAL.HIHs
 {
@@ -43,9 +37,10 @@ namespace SK2EVERYONE.DAL.HIHs
                 }
 
             }
-            catch (Exception ex)
+            catch (InvalidOperationException ex)
             {
-                throw ex;
+                Console.WriteLine(ex.GetType().FullName);
+                Console.WriteLine(ex.Message);
             }
             return hihList;
         }

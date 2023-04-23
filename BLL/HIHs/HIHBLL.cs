@@ -23,8 +23,6 @@ namespace SK2EVERYONE.BLL.HIHs
                     });
                 }
             }
-
-
             return checkHIHList;
         }
     }

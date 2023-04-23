@@ -9,13 +9,13 @@ rem n.2 - typ procesu: import, export, createdb
 rem n.3 - config <path>\<ConfigFile>
 
 rem example for import
-SK2EVERYONE.EXE logs\log.txt import appsetings.json
+SK2EVERYONE.EXE logs\log.txt import appsettings.json
 
 rem example for export
-rem SK2EVERYONE.EXE logs\log.txt export appsetings.json
+rem SK2EVERYONE.EXE logs\log.txt export appsettings.json
 
 rem example for createdb
-rem SK2EVERYONE.EXE logs\log.txt createdb appsetings.json
+rem SK2EVERYONE.EXE logs\log.txt createdb appsettings.json
 
 
 echo ********************************

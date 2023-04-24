@@ -2,18 +2,23 @@
 using SK2EVERYONE.DAL.HIHs;
 using SK2EVERYONE.Model.HIHs;
 using Microsoft.Extensions.Hosting;
+using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.DependencyInjection;
 
-using IHost host = Host.CreateDefaultBuilder(args).Build();
+var host = Host.CreateDefaultBuilder(args).Build();
+
+IConfiguration config = host.Services.GetRequiredService<IConfiguration>();
 
 if (args[1] == "import")
 {
-    List<HIH> hihList = new HIHBLL().GetAllHIH();
-    hihList.ForEach(hih =>
+    using HIHFirebirdDb fbDb = new HIHFirebirdDb(config);
+    var hihs = new HIHSrcDb(config).GetAllHIH();
+
+    foreach (var hih in hihs)
     {
         Console.WriteLine("RegionIdZP: " + hih.Id + " Name: " + hih.Name + " Region: " + hih.Region + " IdZP: " + hih.IdWithoutRegion);
-    });
-    HIHFirebirdDb sqlCmd = new HIHFirebirdDb();
-    sqlCmd.InsertHIH();
+        fbDb.InsertHIH(hih);
+    };
     Console.WriteLine("Import HIH to Firebird OK!");
     Console.ReadKey();
 }

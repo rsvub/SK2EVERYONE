@@ -1,17 +1,24 @@
-﻿using SK2EVERYONE.Model.HIHs;
+﻿using Microsoft.Extensions.Configuration;
+using SK2EVERYONE.Model.HIHs;
 using System.Data.SqlClient;
 
 namespace SK2EVERYONE.DAL.HIHs
 {
-    public class HIHSrcDb
+    interface IHIHSrcDb
+    {
+        IEnumerable<HIH> GetAllHIH();
+    }
+
+    public class HIHSrcDb : IHIHSrcDb
     {
         public string connectionStringSourceSql;
-        public HIHSrcDb() 
+        public HIHSrcDb(IConfiguration config) 
         {
-            connectionStringSourceSql = AppConfig.GetConnectionStringSourceSql();
+            connectionStringSourceSql = config["ConnectionStrings:SourceSqlDb"];
         }
 
-        public List<HIH> GetAllHIH()
+        //TODO: Radek, implement correct IEnumerable
+        public IEnumerable<HIH> GetAllHIH()
         {
             List<HIH> hihList = new List<HIH>();
             try

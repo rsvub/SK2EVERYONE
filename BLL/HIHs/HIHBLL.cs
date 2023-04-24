@@ -1,8 +1,10 @@
-﻿using SK2EVERYONE.DAL.HIHs;
+﻿using Microsoft.Extensions.Configuration;
+using SK2EVERYONE.DAL.HIHs;
 using SK2EVERYONE.Model.HIHs;
 
 namespace SK2EVERYONE.BLL.HIHs
 {
+#if false
     public class HIHBLL
     {
         public List<HIH> GetAllHIH()
@@ -26,4 +28,5 @@ namespace SK2EVERYONE.BLL.HIHs
             return checkHIHList;
         }
     }
+#endif
 }

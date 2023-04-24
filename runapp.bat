@@ -1,8 +1,6 @@
 @echo off
 echo start ...
 
-copy sk2everyone.empty sk2everyone.fdb
-
 rem *** Parameters description ***
 rem n.1 - log <path>\<file>
 rem n.2 - typ procesu: import, export, createdb

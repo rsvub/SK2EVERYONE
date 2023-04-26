@@ -74,8 +74,6 @@ namespace SK2EVERYONE.DAL.HIHs
             }
 
             return connectionString;
-            //return config.GetConnectionString("FirebirdDb");
-            //return config["ConnectionStrings:FirebirdDb"];
         }
 
         public void InsertHIH(HIH hih)
@@ -93,6 +91,6 @@ namespace SK2EVERYONE.DAL.HIHs
                 Console.WriteLine(ex.GetType().FullName);
                 Console.WriteLine(ex.Message);
             }
-}
+        }
     }
 }

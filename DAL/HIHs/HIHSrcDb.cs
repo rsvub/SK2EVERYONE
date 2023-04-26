@@ -1,6 +1,7 @@
 ﻿using Microsoft.Extensions.Configuration;
 using SK2EVERYONE.Model.HIHs;
 using System.Data.SqlClient;
+using System.Runtime.CompilerServices;
 
 namespace SK2EVERYONE.DAL.HIHs
 {
@@ -11,15 +12,52 @@ namespace SK2EVERYONE.DAL.HIHs
 
     public class HIHSrcDb : IHIHSrcDb
     {
-        public string connectionStringSourceSql;
+        private readonly SqlCommand cmd;
+        private string connectionStringSourceSql;
         public HIHSrcDb(IConfiguration config) 
         {
             connectionStringSourceSql = config["ConnectionStrings:SourceSqlDb"];
+            SqlConnection con = new SqlConnection(connectionStringSourceSql);
+            con.Open();
+
+            cmd = new SqlCommand();
+            cmd.Connection = con;
+            cmd.CommandType = System.Data.CommandType.Text;
+            cmd.CommandText = "SELECT T.KOC0441, T.NAC044101, T.NAC044102, T3.KOC0440 FROM A00C0441 T LEFT JOIN A00C0440 T3 ON(T3.ICI0000 = T.ODI0440)";
+        }
+
+        private List<HIH> GetHIH()
+        {
+            List<HIH> hihList = new List<HIH>();
+            try
+            {
+                SqlDataReader rdr = cmd.ExecuteReader();
+                while (rdr.Read())
+                {
+                    hihList.Add(new HIH
+                    {
+                        Id = rdr[0].ToString(),
+                        Name = rdr[1].ToString(),
+                        Region = rdr[2].ToString(),
+                        IdWithoutRegion = rdr[3].ToString(),
+                    });
+                }
+            }
+            catch (InvalidOperationException ex)
+            {
+                Console.WriteLine(ex.GetType().FullName);
+                Console.WriteLine(ex.Message);
+            }
+            return hihList;
         }
 
         //TODO: Radek, implement correct IEnumerable
-        public IEnumerable<HIH> GetAllHIH()
+
+        public IEnumerable<HIH> GetAllHIH() => GetHIH();
+#if false
         {
+
+
             List<HIH> hihList = new List<HIH>();
             try
             {
@@ -51,5 +89,7 @@ namespace SK2EVERYONE.DAL.HIHs
             }
             return hihList;
         }
+#endif
     }
 }
+

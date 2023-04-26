@@ -1,10 +1,9 @@
 ﻿using FirebirdSql.Data.FirebirdClient;
 using Microsoft.Extensions.Configuration;
-using SK2EVERYONE.BLL.HIHs;
-using SK2EVERYONE.Model.HIHs;
+using SK2EVERYONE.Model;
 using System.IO.Compression;
 
-namespace SK2EVERYONE.DAL.HIHs
+namespace SK2EVERYONE.DAL
 {
     class FirebirdDb
     {
@@ -79,7 +78,7 @@ namespace SK2EVERYONE.DAL.HIHs
         public void InsertHIH(HIH hih)
         {
             try
-            {                
+            {
                 cmd.Parameters["@id"].Value = hih.Id;
                 cmd.Parameters["@name"].Value = hih.Name;
                 cmd.Parameters["@region"].Value = hih.Region;

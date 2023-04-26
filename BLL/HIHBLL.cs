@@ -1,8 +1,6 @@
 ﻿using Microsoft.Extensions.Configuration;
-using SK2EVERYONE.DAL.HIHs;
-using SK2EVERYONE.Model.HIHs;
 
-namespace SK2EVERYONE.BLL.HIHs
+namespace SK2EVERYONE.BLL
 {
 #if false
     public class HIHBLL

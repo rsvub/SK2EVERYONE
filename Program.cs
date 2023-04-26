@@ -1,9 +1,7 @@
-﻿using SK2EVERYONE.BLL.HIHs;
-using SK2EVERYONE.DAL.HIHs;
-using SK2EVERYONE.Model.HIHs;
-using Microsoft.Extensions.Hosting;
+﻿using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using SK2EVERYONE.DAL;
 
 var host = Host.CreateDefaultBuilder(args).Build();
 

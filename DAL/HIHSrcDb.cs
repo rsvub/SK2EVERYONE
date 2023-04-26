@@ -1,9 +1,8 @@
 ﻿using Microsoft.Extensions.Configuration;
-using SK2EVERYONE.Model.HIHs;
+using SK2EVERYONE.Model;
 using System.Data.SqlClient;
-using System.Runtime.CompilerServices;
 
-namespace SK2EVERYONE.DAL.HIHs
+namespace SK2EVERYONE.DAL
 {
     interface IHIHSrcDb
     {
@@ -14,7 +13,7 @@ namespace SK2EVERYONE.DAL.HIHs
     {
         private readonly SqlCommand cmd;
         private string connectionStringSourceSql;
-        public HIHSrcDb(IConfiguration config) 
+        public HIHSrcDb(IConfiguration config)
         {
             connectionStringSourceSql = config["ConnectionStrings:SourceSqlDb"];
             SqlConnection con = new SqlConnection(connectionStringSourceSql);

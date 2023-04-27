@@ -8,6 +8,7 @@ var host = Host.CreateDefaultBuilder(args)
     .ConfigureServices(services =>
     {
         services.AddScoped<ISrcDb<HIH>, HIHSrcDb>();
+        services.AddScoped<ISrcDb<Patient>, PatientSrcDb>();
         services.AddScoped<IHIHFirebirdDb, HIHFirebirdDb>();
         services.AddTransient<IHIHImporter, HIHImporter>();
     })

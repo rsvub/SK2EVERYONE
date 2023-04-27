@@ -1,5 +1,6 @@
 ﻿using Microsoft.Extensions.Logging;
 using SK2EVERYONE.DAL.HIHs;
+using SK2EVERYONE.Model.HIHs;
 
 namespace SK2EVERYONE.BLL.HIHs
 {
@@ -9,11 +10,11 @@ namespace SK2EVERYONE.BLL.HIHs
     }
     public class HIHImporter : IHIHImporter
     {
-        private readonly IHIHSrcDb hIHSrcDb;
+        private readonly ISrcDb<HIH> hIHSrcDb;
         private readonly IHIHFirebirdDb hIHFirebirdDb;
         private readonly ILogger<HIHImporter> logger;
 
-        public HIHImporter(IHIHSrcDb hIHSrcDb, IHIHFirebirdDb hIHFirebirdDb, ILogger<HIHImporter> logger)
+        public HIHImporter(ISrcDb<HIH> hIHSrcDb, IHIHFirebirdDb hIHFirebirdDb, ILogger<HIHImporter> logger)
         {
             this.hIHSrcDb = hIHSrcDb;
             this.hIHFirebirdDb = hIHFirebirdDb;
@@ -22,7 +23,7 @@ namespace SK2EVERYONE.BLL.HIHs
 
         public void Import()
         {
-            var hihs = hIHSrcDb.GetAllHIH();
+            var hihs = hIHSrcDb.GetAll();
             foreach (var hih in hihs)
             {
                 var info = $"RegionIdZP: {hih.Id} Name: {hih.Name} Region: {hih.Region} IdZP: {hih.IdWithoutRegion}";

@@ -1,28 +1,43 @@
 ﻿using Dapper;
 using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.Logging;
 using SK2EVERYONE.Model.HIHs;
 using System.Data.SqlClient;
 
 namespace SK2EVERYONE.DAL.HIHs
 {
-    public interface IHIHSrcDb
+    public interface ISrcDb<TModel> where TModel : class
     {
-        IEnumerable<HIH> GetAllHIH();
+        IEnumerable<TModel> GetAll();
     }
 
-    public class HIHSrcDb : IHIHSrcDb, IDisposable
+    public class HIHSrcDb : SrcDbBase<HIH>
     {
         const string sql = "SELECT T.KOC0441 AS Id, T.NAC044101 As Name, T.NAC044102 As Region, T3.KOC0440 As IdWithoutRegion FROM A00C0441 T LEFT JOIN A00C0440 T3 ON(T3.ICI0000 = T.ODI0440)";
-        
+        public HIHSrcDb(IConfiguration config):base(sql, config)
+        {
+        }
+    }
+
+    public class ModelToRemoveSrcDB : SrcDbBase<ModelToRemove>
+    {
+        const string sql = "SELECT T.KOC0441 AS Id, T.NAC044101 As Name, T.NAC044102 As Description FROM A00C0441 T";
+        public ModelToRemoveSrcDB(IConfiguration config) : base(sql, config)
+        {
+        }
+    }
+
+    public abstract class SrcDbBase<TModel> : ISrcDb<TModel>, IDisposable where TModel: class
+    {
+        private readonly string sql;
+
         private readonly string connectionStringSourceSql;
 
         private readonly SqlConnection connection;
-        public HIHSrcDb(IConfiguration config, ILogger<HIHSrcDb> logger) 
+        protected SrcDbBase(string sql, IConfiguration config)
         {
             connectionStringSourceSql = config.GetConnectionString("SourceSqlDb");
             connection = new SqlConnection(connectionStringSourceSql);
-            logger.LogInformation(connectionStringSourceSql);
+            this.sql = sql;
         }
 
         public void Dispose()
@@ -30,9 +45,9 @@ namespace SK2EVERYONE.DAL.HIHs
             connection?.Dispose();
         }
 
-        public IEnumerable<HIH> GetAllHIH()
+        public IEnumerable<TModel> GetAll()
         {
-            return connection.Query<HIH>(sql);
+            return connection.Query<TModel>(sql);
         }
     }
 }

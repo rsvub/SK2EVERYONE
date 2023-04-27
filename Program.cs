@@ -2,11 +2,12 @@
 using SK2EVERYONE.DAL.HIHs;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.DependencyInjection;
+using SK2EVERYONE.Model.HIHs;
 
 var host = Host.CreateDefaultBuilder(args)
     .ConfigureServices(services =>
     {
-        services.AddScoped<IHIHSrcDb, HIHSrcDb>();
+        services.AddScoped<ISrcDb<HIH>, HIHSrcDb>();
         services.AddScoped<IHIHFirebirdDb, HIHFirebirdDb>();
         services.AddTransient<IHIHImporter, HIHImporter>();
     })

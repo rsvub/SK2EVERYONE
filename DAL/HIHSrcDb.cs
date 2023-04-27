@@ -1,4 +1,5 @@
-﻿using Microsoft.Extensions.Configuration;
+﻿using Dapper;
+using Microsoft.Extensions.Configuration;
 using SK2EVERYONE.Model;
 using System.Data.SqlClient;
 
@@ -9,36 +10,25 @@ namespace SK2EVERYONE.DAL
         IEnumerable<HIH> GetAllHIH();
     }
 
-    public class HIHSrcDb : IHIHSrcDb
+    public class HIHSrcDb : IHIHSrcDb, IDisposable
     {
-        private readonly SqlCommand cmd;
-        private string connectionStringSourceSql;
+        const string sql = "SELECT T.KOC0441 AS Id, T.NAC044101 As Name, T.NAC044102 As Region, T3.KOC0440 As IdWithoutRegion FROM A00C0441 T LEFT JOIN A00C0440 T3 ON(T3.ICI0000 = T.ODI0440)";
+        private readonly string connectionStringSourceSql;
+        private readonly SqlConnection connection;
         public HIHSrcDb(IConfiguration config)
         {
             connectionStringSourceSql = config["ConnectionStrings:SourceSqlDb"];
-            SqlConnection con = new SqlConnection(connectionStringSourceSql);
-            con.Open();
-
-            cmd = new SqlCommand();
-            cmd.Connection = con;
-            cmd.CommandType = System.Data.CommandType.Text;
-            cmd.CommandText = "SELECT T.KOC0441, T.NAC044101, T.NAC044102, T3.KOC0440 FROM A00C0441 T LEFT JOIN A00C0440 T3 ON(T3.ICI0000 = T.ODI0440)";
+            connection = new SqlConnection(connectionStringSourceSql);
         }
 
+        public void Dispose()
+        {
+            connection?.Dispose();
+        }
 
         public IEnumerable<HIH> GetAllHIH()
         {
-            SqlDataReader rdr = cmd.ExecuteReader();
-            while (rdr.Read())
-            {
-                yield return new HIH
-                {
-                    Id = rdr[0].ToString(),
-                    Name = rdr[1].ToString(),
-                    Region = rdr[2].ToString(),
-                    IdWithoutRegion = rdr[3].ToString()
-                };
-            }
+            return connection.Query<HIH>(sql);
         }
     }
 }

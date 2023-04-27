@@ -36,7 +36,7 @@ namespace SK2EVERYONE.DAL
 
         public void Dispose()
         {
-            con.Dispose();
+            con?.Dispose();
         }
 
         private string GetConnectionStringFirebird()

@@ -27,12 +27,12 @@ namespace SK2EVERYONE.BLL
             foreach (var hih in hihs)
             {
                 var info = $"RegionIdZP: {hih.Id} Name: {hih.Name} Region: {hih.Region} IdZP: {hih.IdWithoutRegion}";
-                if (hih.Id != "")
+                if (string.IsNullOrEmpty(hih.Id))
                 {
                     logger.LogWarning(info);
                     continue;
                 }
-                logger.LogInformation(info);
+                logger.LogDebug(info);
                 hIHFirebirdDb.InsertHIH(hih);
             };
             logger.LogInformation("Import HIH to Firebird OK!");

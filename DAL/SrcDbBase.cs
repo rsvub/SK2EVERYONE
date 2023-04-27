@@ -1,6 +1,4 @@
 ﻿using Dapper;
-using Microsoft.Extensions.Configuration;
-using SK2EVERYONE.Model;
 using System.Data.SqlClient;
 
 namespace SK2EVERYONE.DAL
@@ -10,24 +8,17 @@ namespace SK2EVERYONE.DAL
         IEnumerable<TModel> GetAll();
     }
 
-    public abstract class SrcDbBase<TModel> : ISrcDb<TModel>, IDisposable where TModel : class
+    public abstract class SrcDbBase<TModel> : ISrcDb<TModel> where TModel : class
     {
         private readonly string sql;
 
-        private readonly string connectionStringSourceSql;
-
         private readonly SqlConnection connection;
-        protected SrcDbBase(string sql, IConfiguration config)
+        protected SrcDbBase(string sql, ISourceConnectionProvider connectionProvider)
         {
-            connectionStringSourceSql = config.GetConnectionString("SourceSqlDb");
-            connection = new SqlConnection(connectionStringSourceSql);
+            connection = connectionProvider.Connection;
             this.sql = sql;
         }
 
-        public void Dispose()
-        {
-            connection?.Dispose();
-        }
         public IEnumerable<TModel> GetAll()
         {
             return connection.Query<TModel>(sql);

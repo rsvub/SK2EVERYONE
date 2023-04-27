@@ -7,8 +7,9 @@ using SK2EVERYONE.BLL;
 var host = Host.CreateDefaultBuilder(args)
     .ConfigureServices(services =>
     {
-        services.AddScoped<ISrcDb<HIH>, HIHSrcDb>();
-        services.AddScoped<ISrcDb<Patient>, PatientSrcDb>();
+        services.AddScoped<ISourceConnectionProvider, SourceConnectionProvider>();
+        services.AddTransient<ISrcDb<HIH>, HIHSrcDb>();
+        services.AddTransient<ISrcDb<Patient>, PatientSrcDb>();
         services.AddScoped<IHIHFirebirdDb, HIHFirebirdDb>();
         services.AddTransient<IHIHImporter, HIHImporter>();
     })

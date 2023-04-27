@@ -1,28 +1,32 @@
 ﻿using FirebirdSql.Data.FirebirdClient;
 using Microsoft.Extensions.Configuration;
-using SK2EVERYONE.BLL.HIHs;
 using SK2EVERYONE.Model.HIHs;
 using System.IO.Compression;
 
 namespace SK2EVERYONE.DAL.HIHs
 {
-    class FirebirdDb
+    public class FirebirdDb
     {
         public string FileName { get; set; }
         public string UserID { get; set; }
         public string Password { get; set; }
     }
 
-    public class HIHFirebirdDb : IDisposable
+    public interface IHIHFirebirdDb
+    {
+        public void InsertHIH(HIH hih);
+    }
+
+    public class HIHFirebirdDb : IHIHFirebirdDb, IDisposable
     {
         private readonly FirebirdDb settings;
 
         private readonly FbConnection con;
         private readonly FbCommand cmd;
         public HIHFirebirdDb(IConfiguration config)
-        {
+        { 
             settings = config.GetSection(nameof(FirebirdDb)).Get<FirebirdDb>();
-            FbConnection con = new FbConnection(GetConnectionStringFirebird());
+            con = new FbConnection(GetConnectionStringFirebird());
             con.Open();
 
             cmd = new FbCommand();

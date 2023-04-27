@@ -1,30 +1,34 @@
 ﻿using SK2EVERYONE.BLL.HIHs;
 using SK2EVERYONE.DAL.HIHs;
-using SK2EVERYONE.Model.HIHs;
 using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 
-var host = Host.CreateDefaultBuilder(args).Build();
-
-IConfiguration config = host.Services.GetRequiredService<IConfiguration>();
-
-if (args[1] == "import")
-{
-    using HIHFirebirdDb fbDb = new HIHFirebirdDb(config);
-    var hihs = new HIHSrcDb(config).GetAllHIH();
-
-    foreach (var hih in hihs)
+var host = Host.CreateDefaultBuilder(args)
+    .ConfigureServices(services =>
     {
-        Console.WriteLine("RegionIdZP: " + hih.Id + " Name: " + hih.Name + " Region: " + hih.Region + " IdZP: " + hih.IdWithoutRegion);
-        fbDb.InsertHIH(hih);
-    };
-    Console.WriteLine("Import HIH to Firebird OK!");
-    Console.ReadKey();
-}
-if (args[1] == "createdb")
+        services.AddScoped<IHIHSrcDb, HIHSrcDb>();
+        services.AddScoped<IHIHFirebirdDb, HIHFirebirdDb>();
+        services.AddTransient<IHIHImporter, HIHImporter>();
+    })
+    .Build();
+
+using var scope = host.Services.CreateScope();
+IServiceProvider provider = scope.ServiceProvider;
+
+switch (args[1].ToLowerInvariant())
 {
-    Console.WriteLine("Under construction!");
-    Console.ReadKey();
+    case "import":
+        var importer = provider.GetRequiredService<IHIHImporter>();
+        importer.Import();
+        break;
+    case "createdb":
+        Console.WriteLine("Under construction!");
+        break;
+    default:
+        Console.WriteLine($"Unknown option {args[1]}");
+        break;
 }
+
+Console.ReadKey();
+
 

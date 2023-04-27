@@ -1,11 +1,12 @@
 ﻿using Dapper;
 using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.Logging;
 using SK2EVERYONE.Model.HIHs;
 using System.Data.SqlClient;
 
 namespace SK2EVERYONE.DAL.HIHs
 {
-    interface IHIHSrcDb
+    public interface IHIHSrcDb
     {
         IEnumerable<HIH> GetAllHIH();
     }
@@ -17,10 +18,11 @@ namespace SK2EVERYONE.DAL.HIHs
         private readonly string connectionStringSourceSql;
 
         private readonly SqlConnection connection;
-        public HIHSrcDb(IConfiguration config) 
+        public HIHSrcDb(IConfiguration config, ILogger<HIHSrcDb> logger) 
         {
-            connectionStringSourceSql = config["ConnectionStrings:SourceSqlDb"];
+            connectionStringSourceSql = config.GetConnectionString("SourceSqlDb");
             connection = new SqlConnection(connectionStringSourceSql);
+            logger.LogInformation(connectionStringSourceSql);
         }
 
         public void Dispose()

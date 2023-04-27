@@ -12,7 +12,12 @@ namespace SK2EVERYONE.DAL
         public string Password { get; set; }
     }
 
-    public class HIHFirebirdDb : IDisposable
+    public interface IHIHFirebirdDb
+    {
+        public void InsertHIH(HIH hih);
+    }
+
+    public class HIHFirebirdDb : IHIHFirebirdDb, IDisposable
     {
         private readonly FirebirdDb settings;
 
@@ -21,7 +26,7 @@ namespace SK2EVERYONE.DAL
         public HIHFirebirdDb(IConfiguration config)
         {
             settings = config.GetSection(nameof(FirebirdDb)).Get<FirebirdDb>();
-            FbConnection con = new FbConnection(GetConnectionStringFirebird());
+            con = new FbConnection(GetConnectionStringFirebird());
             con.Open();
 
             cmd = new FbCommand();
@@ -36,7 +41,7 @@ namespace SK2EVERYONE.DAL
 
         public void Dispose()
         {
-            con?.Dispose();
+            con.Dispose();
         }
 
         private string GetConnectionStringFirebird()

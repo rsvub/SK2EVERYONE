@@ -1,30 +1,41 @@
-﻿using Microsoft.Extensions.Configuration;
+﻿using Microsoft.Extensions.Logging;
+using SK2EVERYONE.DAL;
+using SK2EVERYONE.Model;
 
 namespace SK2EVERYONE.BLL
 {
-#if false
-    public class HIHBLL
+    public interface IHIHImporter
     {
-        public List<HIH> GetAllHIH()
-        {
-            List<HIH> hihList =  new HIHSrcDb().GetAllHIH();
-            List<HIH> checkHIHList = new List<HIH>();
+        void Import();
+    }
+    public class HIHImporter : IHIHImporter
+    {
+        private readonly ISrcDb<HIH> hIHSrcDb;
+        private readonly IHIHFirebirdDb hIHFirebirdDb;
+        private readonly ILogger<HIHImporter> logger;
 
-            foreach (HIH h in hihList)
+        public HIHImporter(ISrcDb<HIH> hIHSrcDb, IHIHFirebirdDb hIHFirebirdDb, ILogger<HIHImporter> logger)
+        {
+            this.hIHSrcDb = hIHSrcDb;
+            this.hIHFirebirdDb = hIHFirebirdDb;
+            this.logger = logger;
+        }
+
+        public void Import()
+        {
+            var hihs = hIHSrcDb.GetAll();
+            foreach (var hih in hihs)
             {
-                if (h.Id != "")
+                var info = $"RegionIdZP: {hih.Id} Name: {hih.Name} Region: {hih.Region} IdZP: {hih.IdWithoutRegion}";
+                if (hih.Id != "")
                 {
-                    checkHIHList.Add(new HIH
-                    {
-                        Id = h.Id,
-                        Name = h.Name,
-                        Region = h.Region,
-                        IdWithoutRegion = h.IdWithoutRegion,
-                    });
+                    logger.LogWarning(info);
+                    continue;
                 }
-            }
-            return checkHIHList;
+                logger.LogInformation(info);
+                hIHFirebirdDb.InsertHIH(hih);
+            };
+            logger.LogInformation("Import HIH to Firebird OK!");
         }
     }
-#endif
 }

@@ -17,7 +17,7 @@ namespace SK2EVERYONE.DAL
 
         public void Dispose()
         {
-            connection?.Dispose();
+            connection.Dispose();
         }
     }
 }

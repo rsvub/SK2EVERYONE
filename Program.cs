@@ -10,7 +10,8 @@ var host = Host.CreateDefaultBuilder(args)
         services.AddScoped<ISourceConnectionProvider, SourceConnectionProvider>();
         services.AddTransient<ISrcDb<HIH>, HIHSrcDb>();
         services.AddTransient<ISrcDb<Patient>, PatientSrcDb>();
-        services.AddScoped<IHIHFirebirdDb, HIHFirebirdDb>();
+        services.AddScoped<IFirebirdConnectionProvider, FirebirdConnectionProvider>();
+        services.AddTransient<IFirebirdDb, HIHFirebirdDb>();
         services.AddTransient<IHIHImporter, HIHImporter>();
     })
     .Build();

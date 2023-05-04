@@ -2,7 +2,7 @@
   "profiles": {
     "SK2EVERYONE": {
       "commandName": "Project",
-      "commandLineArgs": "logs\\log.txt import appsettings.json"
+      "commandLineArgs": "logs import appsettings.json"
     }
   }
 }

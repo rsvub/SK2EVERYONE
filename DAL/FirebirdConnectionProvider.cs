@@ -42,11 +42,6 @@ namespace SK2EVERYONE.DAL
                 ClientLibrary = fireBirdPath
             }.ToString();
 
-            if (!File.Exists(dbPath))
-            {
-                FbConnection.CreateDatabase(connectionString);
-            }
-
             return connectionString;
         }
         public FirebirdConnectionProvider(IConfiguration config) 

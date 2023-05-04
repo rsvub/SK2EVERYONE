@@ -11,10 +11,10 @@ namespace SK2EVERYONE.BLL
     public class HIHImporter : IHIHImporter
     {
         private readonly ISrcDb<HIH> hIHSrcDb;
-        private readonly IFirebirdDb hIHFirebirdDb;
+        private readonly IFirebirdDb<HIH> hIHFirebirdDb;
         private readonly ILogger<HIHImporter> logger;
 
-        public HIHImporter(ISrcDb<HIH> hIHSrcDb, IFirebirdDb hIHFirebirdDb, ILogger<HIHImporter> logger)
+        public HIHImporter(ISrcDb<HIH> hIHSrcDb, IFirebirdDb<HIH> hIHFirebirdDb, ILogger<HIHImporter> logger)
         {
             this.hIHSrcDb = hIHSrcDb;
             this.hIHFirebirdDb = hIHFirebirdDb;
@@ -34,7 +34,7 @@ namespace SK2EVERYONE.BLL
                 }
                 logger.LogDebug(info);
                 object obj = new { id = hih.Id, name = hih.Name, region = hih.Region, idwithoutregion = hih.IdWithoutRegion };
-                hIHFirebirdDb.Insert(obj);
+                hIHFirebirdDb.Insert<HIH>(obj);
             };
             logger.LogInformation("Import HIH to Firebird OK!");
         }

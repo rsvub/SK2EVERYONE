@@ -4,20 +4,28 @@ using SK2EVERYONE.DAL;
 using SK2EVERYONE.Model;
 using SK2EVERYONE.BLL;
 
+FirebirdCreateDb.CreateFBDatabase();
+
 var host = Host.CreateDefaultBuilder(args)
     .ConfigureServices(services =>
     {
         services.AddScoped<ISourceConnectionProvider, SourceConnectionProvider>();
+        services.AddScoped<IFirebirdConnectionProvider, FirebirdConnectionProvider>();
+        services.AddTransient<IFirebirdCreateTable<HIH>, HIHFirebirdCreateTable>();
         services.AddTransient<ISrcDb<HIH>, HIHSrcDb>();
         services.AddTransient<ISrcDb<Patient>, PatientSrcDb>();
-        services.AddScoped<IFirebirdConnectionProvider, FirebirdConnectionProvider>();
-        services.AddTransient<IFirebirdDb, HIHFirebirdDb>();
+        services.AddTransient<IFirebirdDb<HIH>, HIHFirebirdDb>();
         services.AddTransient<IHIHImporter, HIHImporter>();
     })
     .Build();
 
 using var scope = host.Services.CreateScope();
 IServiceProvider provider = scope.ServiceProvider;
+
+
+var firebirdCreateTableHIH = provider.GetRequiredService<IFirebirdCreateTable<HIH>>();
+firebirdCreateTableHIH.Create<HIH>();
+
 
 switch (args[1].ToLowerInvariant())
 { 

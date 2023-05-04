@@ -3,11 +3,11 @@ using FirebirdSql.Data.FirebirdClient;
 
 namespace SK2EVERYONE.DAL
 {
-    public interface IFirebirdDb
+    public interface IFirebirdDb<TModel> where TModel : class
     {
-        void Insert(object obj);
+        void Insert<Tmodel>(object obj);
     }
-    public abstract class FirebirdDbBase : IFirebirdDb
+    public abstract class FirebirdDbBase<Tmodel> : IFirebirdDb<Tmodel> where Tmodel : class
     {
         private readonly string sql;
         private readonly FbConnection connection;
@@ -16,7 +16,8 @@ namespace SK2EVERYONE.DAL
             connection = firebirdConnectionProvider.Connection;
             this.sql = sql;
         }
-        public void Insert(object obj)
+
+        public void Insert<Tmodel>(object obj)
         {
             connection.Execute(sql, obj);
         }

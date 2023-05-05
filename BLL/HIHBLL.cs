@@ -13,6 +13,7 @@ namespace SK2EVERYONE.BLL
         private readonly ISrcDb<HIH> hIHSrcDb;
         private readonly IFirebirdDb<HIH> hIHFirebirdDb;
         private readonly ILogger<HIHImporter> logger;
+        private bool error = false;
 
         public HIHImporter(ISrcDb<HIH> hIHSrcDb, IFirebirdDb<HIH> hIHFirebirdDb, ILogger<HIHImporter> logger)
         {
@@ -29,14 +30,19 @@ namespace SK2EVERYONE.BLL
                 var info = $"RegionIdZP: {hih.Id} Name: {hih.Name} Region: {hih.Region} IdZP: {hih.IdWithoutRegion}";
                 if (string.IsNullOrEmpty(hih.Id))
                 {
-                    logger.LogWarning(info);
+                    logger.LogWarning($"Chyba pri importu ZP - nevyplnene ID ZP: {info}");
+                    error = true;
                     continue;
                 }
                 logger.LogDebug(info);
                 object obj = new { id = hih.Id, name = hih.Name, region = hih.Region, idwithoutregion = hih.IdWithoutRegion };
                 hIHFirebirdDb.Insert<HIH>(obj);
             };
-            logger.LogInformation("Import HIH to Firebird OK!");
+            if (error)
+            {
+                logger.LogInformation("Chyba pri importu HIH - zkontrolujte log!");
+            }
+            else logger.LogInformation("Import HIH to Firebird OK!");
         }
     }
 }

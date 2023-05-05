@@ -19,6 +19,8 @@ namespace SK2EVERYONE.DAL
         }
         public void Create<Tmodel>()
         {
+            Console.WriteLine(sql);
+            Console.ReadKey();
             connection.Execute(sql);
         }
     }

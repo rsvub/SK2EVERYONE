@@ -1,6 +1,5 @@
 ﻿using FirebirdSql.Data.FirebirdClient;
 using System.IO.Compression;
-using System.Reflection.PortableExecutable;
 
 namespace SK2EVERYONE.DAL
 {
@@ -9,7 +8,6 @@ namespace SK2EVERYONE.DAL
 
         public static void CreateFBDatabase()
         {
-            
             var firebirdPath = Path.Combine(Path.GetDirectoryName(Environment.ProcessPath), "FireBird");
             if (!Directory.Exists(firebirdPath))
             {
@@ -32,6 +30,7 @@ namespace SK2EVERYONE.DAL
                 ServerType = FbServerType.Embedded,
                 UserID = "SYSDBA",
                 Password = "masterkey",
+                Charset = "WIN1250",
                 ClientLibrary = fireBirdPath
             }.ToString();
 

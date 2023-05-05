@@ -6,6 +6,7 @@ using SK2EVERYONE.BLL;
 using Microsoft.Extensions.Logging;
 
 
+System.Text.Encoding.RegisterProvider(System.Text.CodePagesEncodingProvider.Instance);
 FirebirdCreateDb.CreateFBDatabase();
 
 var host = Host.CreateDefaultBuilder(args)
@@ -14,6 +15,7 @@ var host = Host.CreateDefaultBuilder(args)
         services.AddScoped<ISourceConnectionProvider, SourceConnectionProvider>();
         services.AddScoped<IFirebirdConnectionProvider, FirebirdConnectionProvider>();
         services.AddTransient<IFirebirdCreateTable<HIH>, HIHFirebirdCreateTable>();
+        services.AddTransient<IFirebirdCreateTable<Patient>, PatientFirebirdCreateTable>();
         services.AddTransient<ISrcDb<HIH>, HIHSrcDb>();
         services.AddTransient<ISrcDb<Patient>, PatientSrcDb>();
         services.AddTransient<IFirebirdDb<HIH>, HIHFirebirdDb>();
@@ -31,6 +33,8 @@ using var logger = loggerFactory.AddFile(Path.Combine(Directory.GetCurrentDirect
 
 var firebirdCreateTableHIH = provider.GetRequiredService<IFirebirdCreateTable<HIH>>();
 firebirdCreateTableHIH.Create<HIH>();
+var firebirdCreateTablePatient = provider.GetRequiredService<IFirebirdCreateTable<Patient>>();
+firebirdCreateTablePatient.Create<Patient>();
 
 
 switch (args[1].ToLowerInvariant())

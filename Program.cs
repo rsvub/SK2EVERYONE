@@ -14,8 +14,8 @@ var host = Host.CreateDefaultBuilder(args)
     {
         services.AddScoped<ISourceConnectionProvider, SourceConnectionProvider>();
         services.AddScoped<IFirebirdConnectionProvider, FirebirdConnectionProvider>();
-        services.AddTransient<IFirebirdCreateTable<HIH>, HIHFirebirdCreateTable>();
-        services.AddTransient<IFirebirdCreateTable<Patient>, PatientFirebirdCreateTable>();
+        services.AddTransient<IFirebirdCreateTable, HIHFirebirdCreateTable>();
+        services.AddTransient<IFirebirdCreateTable, PatientFirebirdCreateTable>();
         services.AddTransient<ISrcDb<HIH>, HIHSrcDb>();
         services.AddTransient<ISrcDb<Patient>, PatientSrcDb>();
         services.AddTransient<IFirebirdDb<HIH>, HIHFirebirdDb>();
@@ -30,11 +30,10 @@ var loggerPath = Path.Combine(Directory.GetCurrentDirectory(), $"{args[0]}");
 if (!Directory.Exists(loggerPath)) Directory.CreateDirectory(loggerPath);
 using var logger = loggerFactory.AddFile(Path.Combine(Directory.GetCurrentDirectory(), $"{args[0]}"));
 
-
-var firebirdCreateTableHIH = provider.GetRequiredService<IFirebirdCreateTable<HIH>>();
-firebirdCreateTableHIH.Create<HIH>();
-var firebirdCreateTablePatient = provider.GetRequiredService<IFirebirdCreateTable<Patient>>();
-firebirdCreateTablePatient.Create<Patient>();
+foreach (var creator in provider.GetServices<IFirebirdCreateTable>())
+{ 
+    creator.Create();
+}
 
 
 switch (args[1].ToLowerInvariant())

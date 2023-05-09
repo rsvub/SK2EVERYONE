@@ -35,8 +35,7 @@ namespace SK2EVERYONE.BLL
                     continue;
                 }
                 logger.LogDebug(info);
-                object obj = new { id = hih.Id, name = hih.Name, region = hih.Region, idwithoutregion = hih.IdWithoutRegion };
-                hIHFirebirdDb.Insert<HIH>(obj);
+                hIHFirebirdDb.Insert(hih);
             };
             if (error)
             {

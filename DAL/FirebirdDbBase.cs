@@ -5,9 +5,9 @@ namespace SK2EVERYONE.DAL
 {
     public interface IFirebirdDb<TModel> where TModel : class
     {
-        void Insert<Tmodel>(object obj);
+        void Insert(TModel obj);
     }
-    public abstract class FirebirdDbBase<Tmodel> : IFirebirdDb<Tmodel> where Tmodel : class
+    public abstract class FirebirdDbBase<TModel> : IFirebirdDb<TModel> where TModel : class
     {
         private readonly string sql;
         private readonly FbConnection connection;
@@ -17,7 +17,7 @@ namespace SK2EVERYONE.DAL
             this.sql = sql;
         }
 
-        public void Insert<Tmodel>(object obj)
+        public void Insert(TModel obj)
         {
             connection.Execute(sql, obj);
         }

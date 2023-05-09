@@ -4,11 +4,12 @@ using FirebirdSql.Data.FirebirdClient;
 
 namespace SK2EVERYONE.DAL
 {
-    public interface IFirebirdCreateTable<Tmodel> where Tmodel : class
+    public interface IFirebirdCreateTable
     {
-        void Create<Tmodel>();
+        void Create();
     }
-    public abstract class FirebirdCreateTable<Tmodel> : IFirebirdCreateTable<Tmodel> where Tmodel : class
+
+    public abstract class FirebirdCreateTable : IFirebirdCreateTable
     {
         private readonly string sql;
         private readonly FbConnection connection;
@@ -17,7 +18,7 @@ namespace SK2EVERYONE.DAL
             connection = firebirdConnectionProvider.Connection;
             this.sql = sql;
         }
-        public void Create<Tmodel>()
+        public void Create()
         {
             Console.WriteLine(sql);
             Console.ReadKey();

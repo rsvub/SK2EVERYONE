@@ -9,5 +9,10 @@ namespace SK2EVERYONE.BLL
         public HIHImporter(ISrcDb<HIH> srcDb, IFirebirdDb<HIH> firebirdDb, ILogger<Importer<HIH>> logger) : base(srcDb, firebirdDb, logger)
         {
         }
+
+        protected override bool ValidateRecord(HIH item)
+        {
+            return !string.IsNullOrEmpty(item.Id);
+        }
     }
 }

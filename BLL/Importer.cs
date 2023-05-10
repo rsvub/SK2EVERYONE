@@ -21,6 +21,8 @@ namespace SK2EVERYONE.BLL
             this.logger = logger;
         }
 
+        protected abstract bool ValidateRecord(Tmodel item);
+
         public void Import()
         {
             var imports = srcDb.GetAll();
@@ -28,7 +30,7 @@ namespace SK2EVERYONE.BLL
             {
                 //var info = $"RegionIdZP: {import.Id} Name: {import.Name} Region: {import.Region} IdZP: {import.IdWithoutRegion}";
                 var info = $"Položka: {import}";
-                if (string.IsNullOrEmpty($"{import}"))
+                if (!ValidateRecord(import))
                 {
                     logger.LogWarning($"Chyba pri importu: {info}");
                     error = true;

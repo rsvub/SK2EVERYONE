@@ -1,5 +1,4 @@
-﻿
-using SK2EVERYONE.Model;
+﻿using SK2EVERYONE.Model;
 
 namespace SK2EVERYONE.DAL
 {

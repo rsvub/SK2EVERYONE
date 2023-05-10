@@ -4,6 +4,7 @@ using SK2EVERYONE.Model;
 
 namespace SK2EVERYONE.BLL
 {
+#if false
     public interface IHIHImporter
     {
         void Import();
@@ -44,4 +45,5 @@ namespace SK2EVERYONE.BLL
             else logger.LogInformation("Import HIH to Firebird OK!");
         }
     }
+#endif
 }

@@ -1,7 +1,6 @@
-﻿
-using SK2EVERYONE.Model;
+﻿using SK2EVERYONE.Model;
 
-namespace SK2EVERYONE.DAL
+namespace SK2EVERYONE.DAL.Patients
 {
     public class PatientSrcDb : SrcDbBase<Patient>
     {
@@ -15,7 +14,7 @@ namespace SK2EVERYONE.DAL
             "T1.CIC271201 AS MobileNumber " +
             "FROM P00C2712 T1 " +
             "LEFT JOIN A00C0441 T3 ON (T3.ICI0000 = T1.ODI0441) ";
-        public PatientSrcDb(ISourceConnectionProvider connectionProvider) :base(sql, connectionProvider) 
+        public PatientSrcDb(ISourceConnectionProvider connectionProvider) : base(sql, connectionProvider)
         {
         }
     }

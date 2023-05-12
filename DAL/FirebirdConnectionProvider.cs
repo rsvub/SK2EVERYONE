@@ -39,6 +39,7 @@ namespace SK2EVERYONE.DAL
                 ServerType = FbServerType.Embedded,
                 UserID = "SYSDBA",
                 Password = "masterkey",
+                Charset = "WIN1250",
                 ClientLibrary = fireBirdPath
             }.ToString();
 

@@ -10,6 +10,11 @@ namespace SK2EVERYONE.BLL
         {
         }
 
+        protected override string ItemDetail(HIH item)
+        {
+            return $"RegionIdZP: {item.Id} Name: {item.Name} Region: {item.Region} IdZP: {item.IdWithoutRegion}";
+        }
+
         protected override bool ValidateRecord(HIH item)
         {
             return !string.IsNullOrEmpty(item.Id);

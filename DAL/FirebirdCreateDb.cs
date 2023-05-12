@@ -3,10 +3,14 @@ using System.IO.Compression;
 
 namespace SK2EVERYONE.DAL
 {
-    public class FirebirdCreateDb
+    public interface IFirebirdCreateDb
+    {
+        void CreateFbDatabase();
+    }
+    public class FirebirdCreateDb : IFirebirdCreateDb
     {
 
-        public static void CreateFBDatabase()
+        public void CreateFbDatabase()
         {
             var firebirdPath = Path.Combine(Path.GetDirectoryName(Environment.ProcessPath), "FireBird");
             if (!Directory.Exists(firebirdPath))
@@ -35,8 +39,7 @@ namespace SK2EVERYONE.DAL
             }.ToString();
 
             if (File.Exists(dbPath)) File.Delete(dbPath);
-            FbConnection.CreateDatabase(connectionString);
-            
+            FbConnection.CreateDatabase(connectionString);            
         }
     }
 }

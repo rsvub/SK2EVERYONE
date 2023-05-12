@@ -1,6 +1,6 @@
 ﻿using SK2EVERYONE.Model;
 
-namespace SK2EVERYONE.DAL
+namespace SK2EVERYONE.DAL.Patients
 {
     public class PatientFirebirdDb : FirebirdDbBase<Patient>
     {

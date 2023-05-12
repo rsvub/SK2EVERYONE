@@ -1,6 +1,6 @@
 ﻿using SK2EVERYONE.Model;
 
-namespace SK2EVERYONE.DAL
+namespace SK2EVERYONE.DAL.HIHs
 {
     public class HIHFirebirdDb : FirebirdDbBase<HIH>
     {

@@ -1,5 +1,4 @@
-﻿
-using Dapper;
+﻿using Dapper;
 using FirebirdSql.Data.FirebirdClient;
 
 namespace SK2EVERYONE.DAL

@@ -4,18 +4,20 @@ using SK2EVERYONE.DAL;
 using SK2EVERYONE.Model;
 using SK2EVERYONE.BLL;
 using Microsoft.Extensions.Logging;
-
-
-System.Text.Encoding.RegisterProvider(System.Text.CodePagesEncodingProvider.Instance);
-FirebirdCreateDb.CreateFBDatabase();
+using System.Text;
+using SK2EVERYONE.DAL.HIHs;
+using SK2EVERYONE.DAL.Patients;
+using SK2EVERYONE.DAL.LoyaltyCards;
 
 var host = Host.CreateDefaultBuilder(args)
     .ConfigureServices(services =>
     {
         services.AddScoped<ISourceConnectionProvider, SourceConnectionProvider>();
         services.AddScoped<IFirebirdConnectionProvider, FirebirdConnectionProvider>();
+        services.AddTransient<IFirebirdCreateDb, FirebirdCreateDb>();
         services.AddTransient<IFirebirdCreateTable, HIHFirebirdCreateTable>();
         services.AddTransient<IFirebirdCreateTable, PatientFirebirdCreateTable>();
+        services.AddTransient<IFirebirdCreateTable, LoyaltyCardFirebirdCreateTabel>(); // - musim doresit fk na jine tabulky (ano ci ne?)
         services.AddTransient<ISrcDb<HIH>, HIHSrcDb>();
         services.AddTransient<ISrcDb<Patient>, PatientSrcDb>();
         services.AddTransient<IFirebirdDb<HIH>, HIHFirebirdDb>();
@@ -27,6 +29,9 @@ var host = Host.CreateDefaultBuilder(args)
 
 using var scope = host.Services.CreateScope();
 IServiceProvider provider = scope.ServiceProvider;
+Encoding.RegisterProvider(CodePagesEncodingProvider.Instance);
+var createFbDatabase = provider.GetRequiredService<IFirebirdCreateDb>();
+createFbDatabase.CreateFbDatabase();
 ILoggerFactory loggerFactory = provider.GetRequiredService<ILoggerFactory>();
 var loggerPath = Path.Combine(Directory.GetCurrentDirectory(), $"{args[0]}");
 if (!Directory.Exists(loggerPath)) Directory.CreateDirectory(loggerPath);

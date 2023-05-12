@@ -22,21 +22,21 @@ namespace SK2EVERYONE.BLL
         }
 
         protected abstract bool ValidateRecord(Tmodel item);
+        protected abstract string ItemDetail(Tmodel item);
 
         public void Import()
         {
             var imports = srcDb.GetAll();
             foreach (var import in imports)
             {
-                //var info = $"RegionIdZP: {import.Id} Name: {import.Name} Region: {import.Region} IdZP: {import.IdWithoutRegion}";
                 var info = $"Položka: {import}";
                 if (!ValidateRecord(import))
                 {
-                    logger.LogWarning($"Chyba pri importu: {info}");
+                    logger.LogWarning($"Chyba pri importu: {ItemDetail(import)}");
                     error = true;
                     continue;
                 }
-                logger.LogDebug(info);
+                logger.LogDebug(ItemDetail(import));
                 firebirdDb.Insert(import);
             };
             if (error)

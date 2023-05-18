@@ -9,7 +9,7 @@ namespace SK2EVERYONE.Model
         public int Active { get; set; }
         public float OtcPoint { get; set; }
         public float RxPoint { get; set;}
-        public char Sex { get; set;}
+        public string Sex { get; set;}
         public string Surname { get; set; }
         public string Name { get; set; }
         public string Street { get; set; }
@@ -22,7 +22,7 @@ namespace SK2EVERYONE.Model
         public string Employment { get; set; }
         public string Title { get; set; }
         public string Note { get; set; }
-        public DateOnly DateOfBirth { get; set; }
+        public DateTime DateOfBirth { get; set; }
         public int UnitId { get; set; }
         public int PhysicianId { get; set; }
     }

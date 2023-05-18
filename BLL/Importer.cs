@@ -23,16 +23,17 @@ namespace SK2EVERYONE.BLL
 
         protected abstract bool ValidateRecord(Tmodel item);
         protected abstract string ItemDetail(Tmodel item);
+        protected abstract string Group();
 
         public void Import()
         {
+            logger.LogInformation($"Import {Group()} starting!");
             var imports = srcDb.GetAll();
             foreach (var import in imports)
             {
-                var info = $"Položka: {import}";
                 if (!ValidateRecord(import))
                 {
-                    logger.LogWarning($"Chyba pri importu: {ItemDetail(import)}");
+                    logger.LogWarning($"Import error on item: {ItemDetail(import)}");
                     error = true;
                     continue;
                 }
@@ -41,9 +42,9 @@ namespace SK2EVERYONE.BLL
             };
             if (error)
             {
-                logger.LogInformation($"Chyba pri importu - zkontrolujte log!");
+                logger.LogInformation($"Import {Group()} error - check log!");
             }
-            else logger.LogInformation($"Import do Firebird OK!");
+            else logger.LogInformation($"Import {Group()} to Firebird finished OK!");
         }
     }
 }

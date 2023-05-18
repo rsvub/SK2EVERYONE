@@ -8,6 +8,7 @@ using System.Text;
 using SK2EVERYONE.DAL.HIHs;
 using SK2EVERYONE.DAL.Patients;
 using SK2EVERYONE.DAL.LoyaltyCards;
+using SK2EVERYONE.DAL.Partners;
 
 var host = Host.CreateDefaultBuilder(args)
     .ConfigureServices(services =>
@@ -18,12 +19,23 @@ var host = Host.CreateDefaultBuilder(args)
         services.AddTransient<IFirebirdCreateTable, HIHFirebirdCreateTable>();
         services.AddTransient<IFirebirdCreateTable, PatientFirebirdCreateTable>();
         services.AddTransient<IFirebirdCreateTable, LoyaltyCardFirebirdCreateTabel>(); // - musim doresit fk na jine tabulky (ano ci ne?)
+        services.AddTransient<IFirebirdCreateTable, CommunicationSettingsFirebirdCreateTable>();
+        services.AddTransient<IFirebirdCreateTable, PartnerFirebirdCreateTable>();
         services.AddTransient<ISrcDb<HIH>, HIHSrcDb>();
         services.AddTransient<ISrcDb<Patient>, PatientSrcDb>();
+        services.AddTransient<ISrcDb<LoyaltyCard>, LoyaltyCardSrcDb>();
+        services.AddTransient<ISrcDb<CommunicationSettings>, CommunicationSettingsSrcDB>();
+        services.AddTransient<ISrcDb<Partner>, PartnerSrcDb>();
         services.AddTransient<IFirebirdDb<HIH>, HIHFirebirdDb>();
         services.AddTransient<IFirebirdDb<Patient>, PatientFirebirdDb>();
+        services.AddTransient<IFirebirdDb<LoyaltyCard>, LoyaltyCardFirebirdDb>();
+        services.AddTransient<IFirebirdDb<CommunicationSettings>, CommunicationSettingsFirebirdDb>();
+        services.AddTransient<IFirebirdDb<Partner>, PartnerFirebirdDb>();
         services.AddTransient<IImporter<HIH>, HIHImporter>();
         services.AddTransient<IImporter<Patient>, PatientImporter>();
+        services.AddTransient<IImporter<LoyaltyCard>, LoyaltyCardImporter>();
+        services.AddTransient<IImporter<CommunicationSettings>, CommunicationSettingsImporter>();
+        services.AddTransient<IImporter<Partner>, PartnerImporter>();
     })
     .Build();
 
@@ -50,7 +62,13 @@ switch (args[1].ToLowerInvariant())
             hIHImporter.Import();
         var patientImporter = provider.GetRequiredService<IImporter<Patient>>();
             patientImporter.Import();
-    break;
+        //var loyaltyCardImporter = provider.GetRequiredService<IImporter<LoyaltyCard>>();
+        //loyaltyCardImporter.Import(); - v databazi se nachazi 2500000 musim zjistit zda se ma konvertovat
+        var communicationSettingsImporter = provider.GetRequiredService<IImporter<CommunicationSettings>>();
+            communicationSettingsImporter.Import();
+        var partnerImporter = provider.GetRequiredService<IImporter<Partner>>();
+            partnerImporter.Import();
+        break;
     case "createdb":
         Console.WriteLine("Under construction!");
     break;

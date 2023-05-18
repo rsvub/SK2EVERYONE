@@ -10,7 +10,7 @@
             "ACTIVE INTEGER, " +
             "OTCPOINT INTEGER, " +
             "RXPOINT INTEGER, " +
-            "SEX CHAR(1), " +
+            "SEX VARCHAR(1), " +
             "SURNAME VARCHAR(50), " +
             "NAME VARCHAR(50), " +
             "STREET VARCHAR(50), " +

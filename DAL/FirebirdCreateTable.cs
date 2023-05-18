@@ -19,8 +19,8 @@ namespace SK2EVERYONE.DAL
         }
         public void Create()
         {
-            Console.WriteLine(sql);
-            Console.ReadKey();
+            //Console.WriteLine(sql);
+            //Console.ReadKey();
             connection.Execute(sql);
         }
     }

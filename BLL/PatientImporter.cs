@@ -11,6 +11,11 @@ namespace SK2EVERYONE.BLL
         {
         }
 
+        protected override string Group()
+        {
+            return $"Patients";
+        }
+
         protected override string ItemDetail(Patient item)
         {
             return $"Name: {item.Name} BirtNumber: {item.BirthNumber} HIHId: {item.HIHId} Street: {item.Street} City: {item.City} ZipCode: {item.ZipCode} PhoneNumber: {item.PhoneNumber} MobileNumber: {item.MobileNumber}";

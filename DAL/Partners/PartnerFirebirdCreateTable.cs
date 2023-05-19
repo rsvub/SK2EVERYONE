@@ -23,7 +23,7 @@
             "COMMUNICATIONCODE VARCHAR(15), " +
             "GROUPTYPE VARCHAR(50), " +
             "SUBSCRIBER INTEGER, " +
-            "SUPPLIER INTEGER " +
+            "SUPPLIER INTEGER, " +
             "CONSTRAINT FK_Partner_CommunicationSettings FOREIGN KEY(COMMUNICATIONID) REFERENCES COMMUNICATIONSETTINGS(ID) ON DELETE NO ACTION ON UPDATE CASCADE)";
         public PartnerFirebirdCreateTable(IFirebirdConnectionProvider firebirdConnectionProvider) : base(sql, firebirdConnectionProvider)
         {

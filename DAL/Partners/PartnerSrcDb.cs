@@ -19,7 +19,7 @@ namespace SK2EVERYONE.DAL.Partners
             "T1.CIC1204 AS MobilePhone, " +
             "T1.NAC1205 AS Email, " +
             "T1.NAC1206 AS WWW, " +
-            "T1.ODI2222 AS CommunicationId, " +
+            "ISNULL(T1.ODI2222, 1) AS CommunicationId, " +
             "T15.KOC1215 AS CommunicationCode, " +
             "T2.NAC120401 AS GroupType, " +
             "F0.ZNB1208 AS Subscriber, " +

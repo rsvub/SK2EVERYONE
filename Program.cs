@@ -18,7 +18,7 @@ var host = Host.CreateDefaultBuilder(args)
         services.AddTransient<IFirebirdCreateDb, FirebirdCreateDb>();
         services.AddTransient<IFirebirdCreateTable, HIHFirebirdCreateTable>();
         services.AddTransient<IFirebirdCreateTable, PatientFirebirdCreateTable>();
-        services.AddTransient<IFirebirdCreateTable, LoyaltyCardFirebirdCreateTabel>(); // - musim doresit fk na jine tabulky (ano ci ne?)
+        services.AddTransient<IFirebirdCreateTable, LoyaltyCardFirebirdCreateTable>(); // - musim doresit fk na jine tabulky (ano ci ne?)
         services.AddTransient<IFirebirdCreateTable, CommunicationSettingsFirebirdCreateTable>();
         services.AddTransient<IFirebirdCreateTable, PartnerFirebirdCreateTable>();
         services.AddTransient<ISrcDb<HIH>, HIHSrcDb>();

@@ -1,7 +1,7 @@
 ﻿
 namespace SK2EVERYONE.Model
 {
-    internal class Product
+    public class Product
     {
         public long Id { get; set; }
         public int SalesActive { get; set; }

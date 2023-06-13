@@ -10,6 +10,7 @@ using SK2EVERYONE.DAL.Patients;
 using SK2EVERYONE.DAL.LoyaltyCards;
 using SK2EVERYONE.DAL.Partners;
 using SK2EVERYONE.DAL.Products;
+using SK2EVERYONE.DAL.Stock;
 
 var host = Host.CreateDefaultBuilder(args)
     .ConfigureServices(services =>
@@ -23,24 +24,28 @@ var host = Host.CreateDefaultBuilder(args)
         services.AddTransient<IFirebirdCreateTable, CommunicationSettingsFirebirdCreateTable>();
         services.AddTransient<IFirebirdCreateTable, PartnerFirebirdCreateTable>();
         services.AddTransient<IFirebirdCreateTable, ProductFirebirdCreateTable>();
+        services.AddTransient<IFirebirdCreateTable, PharmacyStockCreateTable>();
         services.AddTransient<ISrcDb<HIH>, HIHSrcDb>();
         services.AddTransient<ISrcDb<Patient>, PatientSrcDb>();
         services.AddTransient<ISrcDb<LoyaltyCard>, LoyaltyCardSrcDb>();
         services.AddTransient<ISrcDb<CommunicationSettings>, CommunicationSettingsSrcDB>();
         services.AddTransient<ISrcDb<Partner>, PartnerSrcDb>();
         services.AddTransient<ISrcDb<Product>, ProductSrcDb>();
+        services.AddTransient<ISrcDb<PharmacyStock>, PharmacyStockSrcDb>();
         services.AddTransient<IFirebirdDb<HIH>, HIHFirebirdDb>();
         services.AddTransient<IFirebirdDb<Patient>, PatientFirebirdDb>();
         services.AddTransient<IFirebirdDb<LoyaltyCard>, LoyaltyCardFirebirdDb>();
         services.AddTransient<IFirebirdDb<CommunicationSettings>, CommunicationSettingsFirebirdDb>();
         services.AddTransient<IFirebirdDb<Partner>, PartnerFirebirdDb>();
         services.AddTransient<IFirebirdDb<Product>, ProductFirebirdDb>();
+        services.AddTransient<IFirebirdDb<PharmacyStock>, PharmacyStockFirebirdDb>();
         services.AddTransient<IImporter<HIH>, HIHImporter>();
         services.AddTransient<IImporter<Patient>, PatientImporter>();
         services.AddTransient<IImporter<LoyaltyCard>, LoyaltyCardImporter>();
         services.AddTransient<IImporter<CommunicationSettings>, CommunicationSettingsImporter>();
         services.AddTransient<IImporter<Partner>, PartnerImporter>();
         services.AddTransient<IImporter<Product>, ProductImporter>();
+        services.AddTransient<IImporter<PharmacyStock>, PharmacyStockImporter>();
     })
     .Build();
 
@@ -75,6 +80,8 @@ switch (args[1].ToLowerInvariant())
             partnerImporter.Import();
         var productImporter = provider.GetRequiredService<IImporter<Product>>();
             productImporter.Import();
+        var pharmacyStockImporter = provider.GetRequiredService<IImporter<PharmacyStock>>();
+            pharmacyStockImporter.Import();
         break;
     case "createdb":
         Console.WriteLine("Under construction!");

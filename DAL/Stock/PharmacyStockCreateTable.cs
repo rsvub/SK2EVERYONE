@@ -17,7 +17,8 @@
             "PURCHASEDATE DATE, " +
             "SELLINGDATE DATE, " +
             "SUPPLIERIDNUMBER VARCHAR(15), " +
-            "SUPPLIERNAME VARCHAR(100))";
+            "SUPPLIERNAME VARCHAR(100), " +
+            "CONSTRAINT FK_PharmacyStock_Prtoduct FOREIGN KEY(PRODUCTID) REFERENCES PRODUCT(ID) ON DELETE NO ACTION ON UPDATE CASCADE)";
         public PharmacyStockCreateTable(IFirebirdConnectionProvider firebirdConnectionProvider) : base(sql, firebirdConnectionProvider)
         {
         }

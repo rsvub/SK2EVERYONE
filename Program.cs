@@ -24,6 +24,7 @@ var host = Host.CreateDefaultBuilder(args)
         services.AddTransient<IFirebirdCreateTable, CommunicationSettingsFirebirdCreateTable>();
         services.AddTransient<IFirebirdCreateTable, PartnerFirebirdCreateTable>();
         services.AddTransient<IFirebirdCreateTable, ProductFirebirdCreateTable>();
+        services.AddTransient<IFirebirdCreateTable, ProductCodeFirebirdCreateTable>();
         services.AddTransient<IFirebirdCreateTable, PharmacyStockCreateTable>();
         services.AddTransient<IFirebirdCreateTable, DegressiveMarginCreateTable>();
         services.AddTransient<ISrcDb<HIH>, HIHSrcDb>();
@@ -32,6 +33,7 @@ var host = Host.CreateDefaultBuilder(args)
         services.AddTransient<ISrcDb<CommunicationSettings>, CommunicationSettingsSrcDB>();
         services.AddTransient<ISrcDb<Partner>, PartnerSrcDb>();
         services.AddTransient<ISrcDb<Product>, ProductSrcDb>();
+        services.AddTransient<ISrcDb<ProductCode>, ProductCodeSrcDb>();
         services.AddTransient<ISrcDb<PharmacyStock>, PharmacyStockSrcDb>();
         services.AddTransient<ISrcDb<DegressiveMargin>, DegressiveMarginSrcDb>();
         services.AddTransient<IFirebirdDb<HIH>, HIHFirebirdDb>();
@@ -40,6 +42,7 @@ var host = Host.CreateDefaultBuilder(args)
         services.AddTransient<IFirebirdDb<CommunicationSettings>, CommunicationSettingsFirebirdDb>();
         services.AddTransient<IFirebirdDb<Partner>, PartnerFirebirdDb>();
         services.AddTransient<IFirebirdDb<Product>, ProductFirebirdDb>();
+        services.AddTransient<IFirebirdDb<ProductCode>, ProductCodeFirebirdDb>();
         services.AddTransient<IFirebirdDb<PharmacyStock>, PharmacyStockFirebirdDb>();
         services.AddTransient<IFirebirdDb<DegressiveMargin>, DegressiveMarginFirebirdDb>();
         services.AddTransient<IImporter<HIH>, HIHImporter>();
@@ -48,6 +51,7 @@ var host = Host.CreateDefaultBuilder(args)
         services.AddTransient<IImporter<CommunicationSettings>, CommunicationSettingsImporter>();
         services.AddTransient<IImporter<Partner>, PartnerImporter>();
         services.AddTransient<IImporter<Product>, ProductImporter>();
+        services.AddTransient<IImporter<ProductCode>, ProductCodeImporter>();
         services.AddTransient<IImporter<PharmacyStock>, PharmacyStockImporter>();
         services.AddTransient<IImporter<DegressiveMargin>, DegressiveMarginImporter>();
     })
@@ -84,6 +88,8 @@ switch (args[1].ToLowerInvariant())
             partnerImporter.Import();
         var productImporter = provider.GetRequiredService<IImporter<Product>>();
             productImporter.Import();
+        var productCodeImporter = provider.GetRequiredService<IImporter<ProductCode>>();
+            productCodeImporter.Import();
         var pharmacyStockImporter = provider.GetRequiredService<IImporter<PharmacyStock>>();
             pharmacyStockImporter.Import();
         var degressiveMarginImporter = provider.GetRequiredService<IImporter<DegressiveMargin>>();

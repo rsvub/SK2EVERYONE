@@ -1,4 +1,4 @@
-﻿Program pro export dat z databaze MSSQL do FirebirdSQL
+﻿Program pro export dat z databaze MSSQL do Embedded FirebirdSQL 4.0
 
 1.	Pro spuštění je nutné správně nastavit configuraci pro MSSQL v souboru appsettings.json
 2.	Spouštěcí soubor je runapp.bat

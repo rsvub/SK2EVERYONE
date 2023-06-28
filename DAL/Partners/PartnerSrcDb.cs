@@ -4,7 +4,8 @@ namespace SK2EVERYONE.DAL.Partners
 {
     public class PartnerSrcDb : SrcDbBase<Partner>
     {
-        const string sql = "SELECT T1.NAC1201 AS Name, " +
+        const string sql = "SELECT T1.ICI0000 As Id, " +
+            "T1.NAC1201 AS Name, " +
             "T1.NAC1202 AS City, " +
             "T1.NAC1203 AS Street, " +
             "T1.NAC1204 AS ZipCode, " +

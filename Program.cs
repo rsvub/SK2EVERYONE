@@ -25,8 +25,9 @@ var host = Host.CreateDefaultBuilder(args)
         services.AddTransient<IFirebirdCreateTable, PartnerFirebirdCreateTable>();
         services.AddTransient<IFirebirdCreateTable, ProductFirebirdCreateTable>();
         services.AddTransient<IFirebirdCreateTable, ProductCodeFirebirdCreateTable>();
-        services.AddTransient<IFirebirdCreateTable, PharmacyStockCreateTable>();
-        services.AddTransient<IFirebirdCreateTable, DegressiveMarginCreateTable>();
+        services.AddTransient<IFirebirdCreateTable, DeliveryCodeFirebirdCreateTable>();
+        services.AddTransient<IFirebirdCreateTable, PharmacyStockFirebirdCreateTable>();
+        services.AddTransient<IFirebirdCreateTable, DegressiveMarginFirebirdCreateTable>();
         services.AddTransient<ISrcDb<HIH>, HIHSrcDb>();
         services.AddTransient<ISrcDb<Patient>, PatientSrcDb>();
         services.AddTransient<ISrcDb<LoyaltyCard>, LoyaltyCardSrcDb>();
@@ -34,6 +35,7 @@ var host = Host.CreateDefaultBuilder(args)
         services.AddTransient<ISrcDb<Partner>, PartnerSrcDb>();
         services.AddTransient<ISrcDb<Product>, ProductSrcDb>();
         services.AddTransient<ISrcDb<ProductCode>, ProductCodeSrcDb>();
+        services.AddTransient<ISrcDb<DeliveryCode>, DeliveryCodeSrcDb>();
         services.AddTransient<ISrcDb<PharmacyStock>, PharmacyStockSrcDb>();
         services.AddTransient<ISrcDb<DegressiveMargin>, DegressiveMarginSrcDb>();
         services.AddTransient<IFirebirdDb<HIH>, HIHFirebirdDb>();
@@ -43,6 +45,7 @@ var host = Host.CreateDefaultBuilder(args)
         services.AddTransient<IFirebirdDb<Partner>, PartnerFirebirdDb>();
         services.AddTransient<IFirebirdDb<Product>, ProductFirebirdDb>();
         services.AddTransient<IFirebirdDb<ProductCode>, ProductCodeFirebirdDb>();
+        services.AddTransient<IFirebirdDb<DeliveryCode>, DeliveryCodeFirebirdDb>();
         services.AddTransient<IFirebirdDb<PharmacyStock>, PharmacyStockFirebirdDb>();
         services.AddTransient<IFirebirdDb<DegressiveMargin>, DegressiveMarginFirebirdDb>();
         services.AddTransient<IImporter<HIH>, HIHImporter>();
@@ -52,6 +55,7 @@ var host = Host.CreateDefaultBuilder(args)
         services.AddTransient<IImporter<Partner>, PartnerImporter>();
         services.AddTransient<IImporter<Product>, ProductImporter>();
         services.AddTransient<IImporter<ProductCode>, ProductCodeImporter>();
+        services.AddTransient<IImporter<DeliveryCode>, DeliveryCodeImporter>();
         services.AddTransient<IImporter<PharmacyStock>, PharmacyStockImporter>();
         services.AddTransient<IImporter<DegressiveMargin>, DegressiveMarginImporter>();
     })
@@ -90,6 +94,8 @@ switch (args[1].ToLowerInvariant())
             productImporter.Import();
         var productCodeImporter = provider.GetRequiredService<IImporter<ProductCode>>();
             productCodeImporter.Import();
+        var deliveryCodeImporter = provider.GetRequiredService<IImporter<DeliveryCode>>();
+            deliveryCodeImporter.Import();
         var pharmacyStockImporter = provider.GetRequiredService<IImporter<PharmacyStock>>();
             pharmacyStockImporter.Import();
         var degressiveMarginImporter = provider.GetRequiredService<IImporter<DegressiveMargin>>();
@@ -102,6 +108,7 @@ switch (args[1].ToLowerInvariant())
         Console.WriteLine($"Unknown option {args[1]}");
     break;
 }
+Console.WriteLine("Press any key to exit");
 Console.ReadKey();
 
 

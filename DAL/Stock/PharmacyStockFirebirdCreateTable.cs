@@ -1,6 +1,6 @@
 ﻿namespace SK2EVERYONE.DAL.Stock
 {
-    public class PharmacyStockCreateTable : FirebirdCreateTable
+    public class PharmacyStockFirebirdCreateTable : FirebirdCreateTable
     {
         const string sql = "CREATE TABLE PHARMACYSTOCK " +
             "(ID INTEGER NOT NULL PRIMARY KEY, " +
@@ -18,8 +18,8 @@
             "SELLINGDATE DATE, " +
             "SUPPLIERIDNUMBER VARCHAR(15), " +
             "SUPPLIERNAME VARCHAR(100), " +
-            "CONSTRAINT FK_PharmacyStock_Prtoduct FOREIGN KEY(PRODUCTID) REFERENCES PRODUCT(ID) ON DELETE NO ACTION ON UPDATE CASCADE)";
-        public PharmacyStockCreateTable(IFirebirdConnectionProvider firebirdConnectionProvider) : base(sql, firebirdConnectionProvider)
+            "CONSTRAINT FK_PharmacyStock_Product FOREIGN KEY(PRODUCTID) REFERENCES PRODUCT(ID) ON DELETE NO ACTION ON UPDATE CASCADE)";
+        public PharmacyStockFirebirdCreateTable(IFirebirdConnectionProvider firebirdConnectionProvider) : base(sql, firebirdConnectionProvider)
         {
         }
     }

@@ -11,6 +11,7 @@ using SK2EVERYONE.DAL.LoyaltyCards;
 using SK2EVERYONE.DAL.Partners;
 using SK2EVERYONE.DAL.Products;
 using SK2EVERYONE.DAL.Stock;
+using SK2EVERYONE.DAL.Users;
 
 var host = Host.CreateDefaultBuilder(args)
     .ConfigureServices(services =>
@@ -28,6 +29,7 @@ var host = Host.CreateDefaultBuilder(args)
         services.AddTransient<IFirebirdCreateTable, DeliveryCodeFirebirdCreateTable>();
         services.AddTransient<IFirebirdCreateTable, PharmacyStockFirebirdCreateTable>();
         services.AddTransient<IFirebirdCreateTable, DegressiveMarginFirebirdCreateTable>();
+        services.AddTransient<IFirebirdCreateTable, UserFirebirdCreateTable>();
         services.AddTransient<ISrcDb<HIH>, HIHSrcDb>();
         services.AddTransient<ISrcDb<Patient>, PatientSrcDb>();
         services.AddTransient<ISrcDb<LoyaltyCard>, LoyaltyCardSrcDb>();
@@ -38,6 +40,7 @@ var host = Host.CreateDefaultBuilder(args)
         services.AddTransient<ISrcDb<DeliveryCode>, DeliveryCodeSrcDb>();
         services.AddTransient<ISrcDb<PharmacyStock>, PharmacyStockSrcDb>();
         services.AddTransient<ISrcDb<DegressiveMargin>, DegressiveMarginSrcDb>();
+        services.AddTransient<ISrcDb<User>, UserSrcDb>();
         services.AddTransient<IFirebirdDb<HIH>, HIHFirebirdDb>();
         services.AddTransient<IFirebirdDb<Patient>, PatientFirebirdDb>();
         services.AddTransient<IFirebirdDb<LoyaltyCard>, LoyaltyCardFirebirdDb>();
@@ -48,6 +51,7 @@ var host = Host.CreateDefaultBuilder(args)
         services.AddTransient<IFirebirdDb<DeliveryCode>, DeliveryCodeFirebirdDb>();
         services.AddTransient<IFirebirdDb<PharmacyStock>, PharmacyStockFirebirdDb>();
         services.AddTransient<IFirebirdDb<DegressiveMargin>, DegressiveMarginFirebirdDb>();
+        services.AddTransient<IFirebirdDb<User>, UserFirebirdDb>();
         services.AddTransient<IImporter<HIH>, HIHImporter>();
         services.AddTransient<IImporter<Patient>, PatientImporter>();
         services.AddTransient<IImporter<LoyaltyCard>, LoyaltyCardImporter>();
@@ -58,6 +62,7 @@ var host = Host.CreateDefaultBuilder(args)
         services.AddTransient<IImporter<DeliveryCode>, DeliveryCodeImporter>();
         services.AddTransient<IImporter<PharmacyStock>, PharmacyStockImporter>();
         services.AddTransient<IImporter<DegressiveMargin>, DegressiveMarginImporter>();
+        services.AddTransient<IImporter<User>, UserImporter>();
     })
     .Build();
 
@@ -100,6 +105,8 @@ switch (args[1].ToLowerInvariant())
             pharmacyStockImporter.Import();
         var degressiveMarginImporter = provider.GetRequiredService<IImporter<DegressiveMargin>>();
             degressiveMarginImporter.Import();
+        var userImporter = provider.GetRequiredService<IImporter<User>>();
+            userImporter.Import();
         break;
     case "createdb":
         Console.WriteLine("Under construction!");

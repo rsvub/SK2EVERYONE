@@ -36,6 +36,11 @@ namespace SK2EVERYONE.Model
         public int FMD { get; set; }
         public int PlanningWizard { get; set;}
         public float TaxaLaborum { get; set; }
-
+        public string L1Code { get; set; }
+        public string L2Code { get; set; }
+        public string L3Code { get; set; }
+        public string L4Code { get; set; }
+        public string L5Code { get; set; }
+        public string L6Code { get; set; }
     }
 }

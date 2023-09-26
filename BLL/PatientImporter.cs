@@ -18,12 +18,12 @@ namespace SK2EVERYONE.BLL
 
         protected override string ItemDetail(Patient item)
         {
-            return $"Name: {item.Name} BirtNumber: {item.BirthNumber} HIHId: {item.HIHId} Street: {item.Street} City: {item.City} ZipCode: {item.ZipCode} PhoneNumber: {item.PhoneNumber} MobileNumber: {item.MobileNumber}";
+            return $"Name: {item.Name} NationalIdentificationNumber: {item.NationalIdentificationNumber} HIHId: {item.HIHId} Street: {item.Street} City: {item.City} ZipCode: {item.ZipCode} PhoneNumber: {item.PhoneNumber} MobileNumber: {item.MobileNumber}";
         }
 
         protected override bool ValidateRecord(Patient item)
         {
-            return !string.IsNullOrEmpty(item.BirthNumber);
+            return !string.IsNullOrEmpty(item.NationalIdentificationNumber);
         }
     }
 }

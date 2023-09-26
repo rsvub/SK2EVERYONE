@@ -4,7 +4,7 @@
     {
         //public int Id { get; set; }
         public string Name { get; set; }
-        public string BirthNumber{ get; set; }
+        public string NationalIdentificationNumber{ get; set; }
         public string HIHId { get; set; }
         //public virtual HIH HIH { get; set; }
         public string Street { get; set; }

@@ -5,7 +5,7 @@ namespace SK2EVERYONE.DAL.Patients
     public class PatientSrcDb : SrcDbBase<Patient>
     {
         const string sql = "SELECT T1.NAC271200 AS Name, " +
-            "T1.KOC0350 AS BirthNumber, " +
+            "T1.KOC0350 AS NationalIdentificationNumber, " +
             "T3.KOC0441 AS HIHId, " +
             "T1.NAC271202 AS Street, " +
             "T1.NAC271201 AS City, " +

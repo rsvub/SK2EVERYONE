@@ -35,6 +35,7 @@ var host = Host.CreateDefaultBuilder(args)
         services.AddTransient<IFirebirdCreateTable, UserFirebirdCreateTable>();
         services.AddTransient<IFirebirdCreateTable, DocumentTypeFirebirdCreateTable>();
         services.AddTransient<IFirebirdCreateTable, TransactionFirebirdCreateTable>();
+        services.AddTransient<IFirebirdCreateTable, PrescriptionFirebirdCreateTable>();
         services.AddTransient<IFirebirdCreateTable, LxCatalogFirebirdCreateTable>();
         services.AddTransient<ISrcDb<HIH>, HIHSrcDb>();
         services.AddTransient<ISrcDb<Patient>, PatientSrcDb>();
@@ -49,6 +50,7 @@ var host = Host.CreateDefaultBuilder(args)
         services.AddTransient<ISrcDb<User>, UserSrcDb>();
         services.AddTransient<ISrcDb<DocumentType>, DocumentTypeSrcDb>();
         services.AddTransient<ISrcDb<Transaction>, TransactionSrcDb>();
+        services.AddTransient<ISrcDb<Prescription>, PrescriptionSrcDb>();
         services.AddTransient<IFirebirdDb<HIH>, HIHFirebirdDb>();
         services.AddTransient<IFirebirdDb<Patient>, PatientFirebirdDb>();
         services.AddTransient<IFirebirdDb<LoyaltyCard>, LoyaltyCardFirebirdDb>();
@@ -62,6 +64,7 @@ var host = Host.CreateDefaultBuilder(args)
         services.AddTransient<IFirebirdDb<User>, UserFirebirdDb>();
         services.AddTransient<IFirebirdDb<DocumentType>, DocumentTypeFirebirdDb>();
         services.AddTransient<IFirebirdDb<Transaction>, TransactionFirebirdDb>();
+        services.AddTransient<IFirebirdDb<Prescription>, PrescriptionFirebirdDb>();
         services.AddTransient<IFirebirdDb<LxCatalog>, LxCatalogFirebirdDb>();
         services.AddTransient<IImporter<HIH>, HIHImporter>();
         services.AddTransient<IImporter<Patient>, PatientImporter>();
@@ -76,6 +79,7 @@ var host = Host.CreateDefaultBuilder(args)
         services.AddTransient<IImporter<User>, UserImporter>();
         services.AddTransient<IImporter<DocumentType>, DocumentTypeImporter>();
         services.AddTransient<IImporter<Transaction>, TransactionImporter>();
+        services.AddTransient<IImporter<Prescription>, PrescriptionImporter>();
         services.AddTransient<ISrcCsv<LxCatalog>, LxCatalogSrcCsv>();
         services.AddTransient<ICsvImporter<LxCatalog>, LxCatalogCsvImporter>();
     })
@@ -126,6 +130,8 @@ switch (args[1].ToLowerInvariant())
             documentTypeImporter.Import();
         var transactionImporter = provider.GetRequiredService<IImporter<Transaction>>();
             transactionImporter.Import();
+        var prescriptionImporter = provider.GetRequiredService<IImporter<Prescription>>();
+            prescriptionImporter.Import();
         var lxCatalog = provider.GetRequiredService<ICsvImporter<LxCatalog>>();
             lxCatalog.CsvImport();
     break;
